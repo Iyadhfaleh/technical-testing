@@ -28,8 +28,11 @@ class ExampleJob extends Job
     {
         try {
             $job = MyJob::find($this->task['reference']);
-            $job->status = MyJob::$status['run_success'];
-            $job->save();
+            if ($job->status === MyJob::$status['scheduled']) {
+                //TODO do what you want
+                $job->status = MyJob::$status['run_success'];
+                $job->save();
+            }
         } catch (\Exception $e) {
             $this->fail($e);
         }
