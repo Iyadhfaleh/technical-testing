@@ -2,6 +2,8 @@
 
 /** @var \Laravel\Lumen\Routing\Router $router */
 
+use App\Http\Controllers\JobController;
+
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -16,3 +18,15 @@
 $router->get('/', function () use ($router) {
     return $router->app->version();
 });
+$router->post('job', [
+    'as' => 'store', 'uses' => 'JobController@store'
+]);
+$router->get('job/{reference}', [
+    'as' => 'show', 'uses' => 'JobController@show'
+]);
+$router->put('job/{reference}', [
+    'as' => 'remove', 'uses' => 'JobController@update'
+]);
+$router->delete('job/{reference}', [
+    'as' => 'remove', 'uses' => 'JobController@remove'
+]);

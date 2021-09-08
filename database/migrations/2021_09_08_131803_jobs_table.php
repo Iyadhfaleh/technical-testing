@@ -17,8 +17,8 @@ class JobsTable extends Migration
             $table->uuid('reference');
             $table->string('name');
             $table->longText('description');
-            $table->unsignedInteger('schedule_at');
-            $table->unsignedInteger('created_at');
+            $table->dateTime('schedule_at');
+            $table->dateTime('created_at');
             $table->index(['name', 'schedule_at']);
         });
     }
