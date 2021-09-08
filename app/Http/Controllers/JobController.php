@@ -32,7 +32,7 @@ class JobController extends Controller
         );
         $job = $this->add($request);
         $this->dispatch(new ExampleJob($request->all()));
-        return $this->respond('done', $job);
+        return $this->respond('created', $job);
     }
 
     /**
