@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Job;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -35,11 +36,11 @@ trait RestActions
         return $this->respond('done', $model);
     }
 
-    public function add(Request $request): JsonResponse
+    public function add(Request $request): Job
     {
         $m = self::MODEL;
         $this->validate($request, $m::$rules);
-        return $this->respond('created', $m::create($request->all()));
+        return $m::create($request->all());
     }
 
     public function put(Request $request, $reference): JsonResponse
@@ -57,7 +58,7 @@ trait RestActions
     public function destroy($reference): JsonResponse
     {
         $m = self::MODEL;
-        $model = $m::find($reference);;
+        $model = $m::find($reference);
         if (is_null($model)) {
             return $this->respond('not_found');
 
@@ -66,7 +67,7 @@ trait RestActions
         return $this->respond('removed');
     }
 
-    protected function respond($status, $data = []): JsonResponse
+    public function respond($status, $data = []): JsonResponse
     {
         return response()->json($data, $this->statusCodes[$status]);
     }

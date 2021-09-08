@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\ExampleJob;
 use App\Models\Job;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Queue\Queue;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 
@@ -28,7 +30,9 @@ class JobController extends Controller
                 'status' => Job::$status['scheduled']
             ]
         );
-        return $this->add($request);
+        $job = $this->add($request);
+        $this->dispatch(new ExampleJob($request->all()));
+        return $this->respond('done', $job);
     }
 
     /**
